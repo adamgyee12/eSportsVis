@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <title>Radar chart</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="d3.slider.js"></script>
+	<script src="RadarChart.js"></script>
+	<style>
+		body {
+		  overflow: hidden;
+		  margin: 0;
+		  font-size: 14px;
+		  font-family: "Helvetica Neue", Helvetica;
+		}
+
+		#chart {
+		  position: relative;
+		  top: 20px;
+		  left: 70px;
+		}
+
+	</style>
+  </head>
+  <body>
+
+
+    <h1 align="center" id="top_header">What do you think it takes to be an eSport Professional?</h1>
+
+    <table align="center">
+    <tr>
+      <th>
+        <label for="Endurance"
+               style="text-align: right">
+               Endurance = <span id="Endurance-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Endurance">
+      </th>
+      <th>
+        <label for="Analytic Aptitude"
+             style="text-align: right">
+             Analytic Aptitude = <span id="Analytic Aptitude-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Analytic Aptitude">
+      </th>
+      <th>
+        <label for="Hand-Eye Coord"
+               style="text-align: right">
+               Hand-Eye Coord = <span id="Hand-Eye Coord-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Hand-Eye Coord">
+      </th>
+      <th>
+        <label for="Durability"
+               style="text-align: right">
+               Durability = <span id="Durability-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Durability">
+      </th>
+      <th>
+        <label for="Nerve"
+               style="text-align: right">
+               Nerve = <span id="Nerve-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Nerve">
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <label for="Flexibility"
+               style="text-align: right">
+               Flexibility = <span id="Flexibility-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Flexibility">
+      </th>
+      <th>
+        <label for="Agility"
+               style="text-align: right">
+               Agility = <span id="Agility-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Agility">
+      </th>
+      <th>
+        <label for="Speed"
+               style="text-align: right">
+               Speed = <span id="Speed-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Speed">
+      </th>
+      <th>
+        <label for="Power"
+               style="text-align: right">
+               Power = <span id="Power-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Power">
+      </th>
+      <th>
+        <label for="Strength"
+               style="text-align: right">
+               Strength = <span id="Strength-value"></span>
+        </label>
+        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Strength">
+      </th>
+    </tr>
+    </table>
+
+    <div align="center" id="body">
+    </br></br>
+      <button id="submitBtn">Continue</button>
+
+	  <div id="chart"></div>
+
+    </div>
+
+
+    <script type="text/javascript" src="script.js"></script>
+
+  </body>
+</html>
