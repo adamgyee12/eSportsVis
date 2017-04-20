@@ -1,119 +1,144 @@
-<!DOCTYPE html>
+<!Doctype html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <title>Radar chart</title>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="d3.slider.js"></script>
-	<script src="RadarChart.js"></script>
-	<style>
-		body {
-		  overflow: hidden;
-		  margin: 0;
-		  font-size: 14px;
-		  font-family: "Helvetica Neue", Helvetica;
-		}
 
-		#chart {
-		  position: relative;
-		  top: 20px;
-		  left: 70px;
-		}
-
-	</style>
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Through the Eyes of a Survivor">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Numbers behind eSports</title>
 
 
-    <h1 align="center" id="top_header">What do you think it takes to be an eSport Professional?</h1>
+  <link rel="stylesheet" href="css/bootstrap.yeti.min.css">
+  <!--
+  <link rel="stylesheet" href="css/slider/nouislider.min.css">
+  <link rel="stylesheet" href="css/slider/nouislider.pips.css">
+  <link rel="stylesheet" href="css/slider/nouislider.tooltips.css">
+  -->
+  <link rel="stylesheet" href="css/style.css">
 
-    <table align="center">
-    <tr>
-      <th>
-        <label for="Endurance"
-               style="text-align: right">
-               Endurance = <span id="Endurance-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Endurance">
-      </th>
-      <th>
-        <label for="Analytic Aptitude"
-             style="text-align: right">
-             Analytic Aptitude = <span id="Analytic Aptitude-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Analytic Aptitude">
-      </th>
-      <th>
-        <label for="Hand-Eye Coord"
-               style="text-align: right">
-               Hand-Eye Coord = <span id="Hand-Eye Coord-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Hand-Eye Coord">
-      </th>
-      <th>
-        <label for="Durability"
-               style="text-align: right">
-               Durability = <span id="Durability-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Durability">
-      </th>
-      <th>
-        <label for="Nerve"
-               style="text-align: right">
-               Nerve = <span id="Nerve-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Nerve">
-      </th>
-    </tr>
-    <tr>
-      <th>
-        <label for="Flexibility"
-               style="text-align: right">
-               Flexibility = <span id="Flexibility-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Flexibility">
-      </th>
-      <th>
-        <label for="Agility"
-               style="text-align: right">
-               Agility = <span id="Agility-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Agility">
-      </th>
-      <th>
-        <label for="Speed"
-               style="text-align: right">
-               Speed = <span id="Speed-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Speed">
-      </th>
-      <th>
-        <label for="Power"
-               style="text-align: right">
-               Power = <span id="Power-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Power">
-      </th>
-      <th>
-        <label for="Strength"
-               style="text-align: right">
-               Strength = <span id="Strength-value"></span>
-        </label>
-        <input class="interactive" type="number" min="0" max="10" step="1" value="5" id="Strength">
-      </th>
-    </tr>
-    </table>
+  <link rel="stylesheet" href="css/jquery.fullPage.css" />
 
-    <div align="center" id="body">
-    </br></br>
-      <button id="submitBtn">Continue</button>
+  <link rel="icon" type="image/png" href="images/favicon.png">
 
-	  <div id="chart"></div>
+</head>
+
+<body>
+
+  <div id="fullpage">
+
+    <section class="section" id="section-intro">
+      <div class="container" id="cover-container">
+        <h1 class="mega-header" align="center">eSports as a Career</h1>
+        <h2 align="center">Looking at the numbers behind professional video gamers</h2>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h1 align="center">What do you think it takes to be an eSport professional?</h1>
+        <div class="row">
+
+          <div class="col-sm-6">
+            <div id="chart"></div>
+          </div>
+
+          <div class="col-sm-6" align="left">
+            <p class="lead">Assign a value to measure the demands of each skill required of eSports, compared to other sports.</p>
+
+            <div class="col-sm-4" align="left"></div>
+            <div class="col-sm-4" align="left">
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Endurance"> - </button> <button class="plusBtn" id="Endurance"> + </button> Endurance </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Analytic Aptitude"> - </button> <button class="plusBtn" id="Analytic Aptitude"> + </button> Analytic Aptitude </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Hand-Eye Coord"> - </button> <button class="plusBtn" id="Hand-Eye Coord"> + </button> Hand-Eye Coord </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Durability"> - </button> <button class="plusBtn" id="Durability"> + </button> Durability </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Nerve"> - </button> <button class="plusBtn" id="Nerve"> + </button> Nerve </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Flexibility"> - </button> <button class="plusBtn" id="Flexibility"> + </button> Flexibility </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Agility"> - </button> <button class="plusBtn" id="Agility"> + </button> Agility </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Speed"> - </button> <button class="plusBtn" id="Speed"> + </button> Speed </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Power"> - </button> <button class="plusBtn" id="Power"> + </button> Power </h5>
+            </div>
+            <div class="row" align="left">
+              <h5> <button class="minusBtn" id="Strength"> - </button> <button class="plusBtn" id="Strength"> + </button> Strength </h5>
+            </div>
+            </div>
+            <div class="col-sm-4" align="left"></div>
+          </div>
+          <div class="row" align="right">
+            <!--<h2><button id="submitBtn">Done</button></h2>-->
+            <h2><a id="submitBtn" class="btn btn-primary">View Other Sports</a></h2>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>Alexandra was sexually assaulted. <a href="https://www.washingtonpost.com/graphics/local/sexual-assault/" target="_blank">Here's her story.</a></h2>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div id="party-scene">
+              <img src="images/woman-white.png" id="party-woman">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <samp id="story-alexandra"></samp>
+          </div>
+        </div>
+      </div>
+    </section>
 
     </div>
 
+    <!-- Load JS libraries: jQuery, bootstrap, D3 -->
+    <script src="js/lib/jquery.min.js "></script>
 
-    <script type="text/javascript" src="script.js"></script>
+    <script src="js/lib/bootstrap.min.js "></script>
+    <script src="js/lib/d3.min.js "></script>
+    <script src="js/lib/d3.grid.min.js "></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!--
+    <script src="js/lib/malarkey.min.js "></script>
+    <script src="js/lib/d3-ease.v1.min.js "></script>
+    <script src="js/lib/d3.legend.js "></script>
+    -->
+    <script src="js/lib/jquery.fullPage.min.js "></script>
 
-  </body>
+    <!-- Your implementation -->
+    <!--
+    <script src="js/campusmap.js "></script>
+    <script src="js/barchart.js "></script>
+    <script src="js/survivors.js "></script>
+    <script src="js/linechart.js "></script>
+    <script src="js/comparative-rates.js "></script>
+    <script src="js/people-display.js "></script>
+    <script src="js/arrest-wheel.js "></script>
+    <script src="js/quiz.js "></script>
+    <script src="js/rate-report.js "></script>
+    -->
+    <script src="js/RadarChart.js "></script>
+    <script src="js/main.js "></script>
+
+</body>
+
 </html>
