@@ -40,7 +40,7 @@ var RadarChart = {
       return i.axis;
     //console.log(i.axis); return i.axis;
   }));
-  console.log(allAxis);
+
 	var total = allAxis.length;
 	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
 	var Format = d3.format('#');
@@ -55,7 +55,7 @@ var RadarChart = {
 			;
 
 	var tooltip;
-  var label;
+  //var label;
 
 	//Circular segments
 	for(var j=0; j<cfg.levels-1; j++){
@@ -155,25 +155,11 @@ var RadarChart = {
 										g.selectAll(z)
 										 .transition(200)
 										 .style("fill-opacity", .7);
-                     console.log(d);
-                     label
-           						.attr('x', 300)
-           						.attr('y', 300)
-           						.text(Format(d.value))
-           						.transition(200)
-           						.style('opacity', 1);
 									  })
 					 .on('mouseout', function(){
 										g.selectAll("polygon")
 										 .transition(200)
 										 .style("fill-opacity", cfg.opacityArea);
-
-                     label
-           						.attr('x', 300)
-           						.attr('y', 300)
-           						.text(Format(d.value))
-           						.transition(200)
-           						.style('opacity', 0);
 					 });
       //poly.merge(poly);
 
@@ -314,7 +300,7 @@ var emptycfg = {
 
 //Call function to draw the Radar chart
 //Will expect that data is in %'s
-console.log(d);
+
 RadarChart.draw("#chart",
     [[//empty
       {axis:"Endurance",value:0.0},

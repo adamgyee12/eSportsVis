@@ -1,3 +1,16 @@
+.arc text {
+  font: 10px;
+  text-anchor: middle;
+}
+
+.arc path {
+  stroke-width: 2;
+  stroke: white;
+}
+
+.hovered {
+  opacity: .5;
+}
 
 .well-white {
   background-color: white;
@@ -82,7 +95,7 @@
 /***************/
 
 .bar {
-  fill: #c8c8c8;
+
 }
 
 .bar:hover, .bar.sexual-assault:hover {
