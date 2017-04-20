@@ -280,17 +280,6 @@ var d = [
 			{axis:"Durability",value:8.5},
 			{axis:"Hand-Eye Coord",value:5.5},
 			{axis:"Analytic Aptitude",value:7.1}
-    ],[ //baseball
-      {axis:"Endurance",value:4.6},
-			{axis:"Strength",value:5.7},
-			{axis:"Power",value:7.6},
-			{axis:"Speed",value:6.5},
-			{axis:"Agility",value:6.7},
-			{axis:"Flexibility",value:4.7},
-			{axis:"Nerve",value:5.1},
-			{axis:"Durability",value:5.6},
-			{axis:"Hand-Eye Coord",value:9.2},
-			{axis:"Analytic Aptitude",value:6.2}
     ],[ //golf
       {axis:"Endurance",value:3.2},
 			{axis:"Strength",value:3.8},
@@ -357,28 +346,63 @@ d3.selectAll(".minusBtn").on("click", function() {
 //update(5);
 // adjust the text
 var interactive_data =
-[[
-  {axis:"Endurance",value:5.0},
-  {axis:"Strength",value:5.0},
-  {axis:"Power",value:5.0},
-  {axis:"Speed",value:5.0},
-  {axis:"Agility",value:5.0},
-  {axis:"Flexibility",value:5.0},
-  {axis:"Nerve",value:5.0},
-  {axis:"Durability",value:5.0},
-  {axis:"Hand-Eye Coord",value:5.0},
-  {axis:"Analytic Aptitude",value:5.0}
-]];
+[
+  [//basketball
+    {axis:"Endurance",value:0.0},
+    {axis:"Strength",value:0.0},
+    {axis:"Power",value:0.0},
+    {axis:"Speed",value:0.0},
+    {axis:"Agility",value:0.0},
+    {axis:"Flexibility",value:0.0},
+    {axis:"Nerve",value:0.0},
+    {axis:"Durability",value:0.0},
+    {axis:"Hand-Eye Coord",value:0.0},
+    {axis:"Analytic Aptitude",value:0.0}
+  ],[ //football
+    {axis:"Endurance",value:0.0},
+    {axis:"Strength",value:0.0},
+    {axis:"Power",value:0.0},
+    {axis:"Speed",value:0.0},
+    {axis:"Agility",value:0.0},
+    {axis:"Flexibility",value:0.0},
+    {axis:"Nerve",value:0.0},
+    {axis:"Durability",value:0.0},
+    {axis:"Hand-Eye Coord",value:0.0},
+    {axis:"Analytic Aptitude",value:0.0}
+  ],[ //golf
+    {axis:"Endurance",value:0.0},
+    {axis:"Strength",value:0.0},
+    {axis:"Power",value:0.0},
+    {axis:"Speed",value:0.0},
+    {axis:"Agility",value:0.0},
+    {axis:"Flexibility",value:0.0},
+    {axis:"Nerve",value:0.0},
+    {axis:"Durability",value:0.0},
+    {axis:"Hand-Eye Coord",value:0.0},
+    {axis:"Analytic Aptitude",value:0.0}
+],[ //user's esports
+    {axis:"Endurance",value:5.0},
+    {axis:"Strength",value:5.0},
+    {axis:"Power",value:5.0},
+    {axis:"Speed",value:5.0},
+    {axis:"Agility",value:5.0},
+    {axis:"Flexibility",value:5.0},
+    {axis:"Nerve",value:5.0},
+    {axis:"Durability",value:5.0},
+    {axis:"Hand-Eye Coord",value:5.0},
+    {axis:"Analytic Aptitude",value:5.0}
+  ]
+];
 RadarChart.draw("#chart", interactive_data, mycfg);
 
 function plus_update(metric) {
   // adjust the value
   //update metric based on user input
 
-  for (var i = 0; i < interactive_data[0].length; i++){
-    if (interactive_data[0][i].axis == metric){
-      if (interactive_data[0][i].value >= 10) return;
-      interactive_data[0][i].value++;
+  for (var i = 0; i < interactive_data[3].length; i++){
+    if (interactive_data[3][i].axis == metric){
+      if (interactive_data[3][i].value >= 10) return;
+      interactive_data[3][i].value++;
     }
   }
 
@@ -391,10 +415,10 @@ function minus_update(metric) {
   // adjust the value
   //update metric based on user input
 
-  for (var i = 0; i < interactive_data[0].length; i++){
-    if (interactive_data[0][i].axis == metric){
-      if (interactive_data[0][i].value <= 0) return;
-      interactive_data[0][i].value--;
+  for (var i = 0; i < interactive_data[3].length; i++){
+    if (interactive_data[3][i].axis == metric){
+      if (interactive_data[3][i].value <= 0) return;
+      interactive_data[3][i].value--;
     }
   }
 
@@ -403,20 +427,60 @@ function minus_update(metric) {
     .attr("transform", "translate(300,150) rotate("+nValue+")");*/
 }
 
-d3.select("#submitBtn").on("click", function(){
-  console.log(interactive_data);
-  console.log(d.splice(d.length,0,interactive_data[0]));
-  console.log(d);
+d3.select("#toggleBasketball").on("click", function(){
 
-  //Hide selectors
+  if (interactive_data[0][0].value > 0){
+    //toggle off
+    for (var j = 0; j < interactive_data[0].length; j++){
+      interactive_data[0][j].value = 0;
+    }
+  } else {
+    //toggle on
+      for (var j = 0; j < interactive_data[0].length; j++){
+        interactive_data[0][j].value = d[0][j].value;
+      }
+  }
+  //Show rest of data
+  drawChartWithData();
+});
 
+d3.select("#toggleFootball").on("click", function(){
+
+  if (interactive_data[1][0].value > 0){
+    //toggle off
+    for (var j = 0; j < interactive_data[1].length; j++){
+      interactive_data[1][j].value = 0;
+    }
+  } else {
+    //toggle on
+      for (var j = 0; j < interactive_data[1].length; j++){
+        interactive_data[1][j].value = d[1][j].value;
+      }
+  }
+  //Show rest of data
+  drawChartWithData();
+});
+
+d3.select("#toggleGolf").on("click", function(){
+
+  if (interactive_data[2][0].value > 0){
+    //toggle off
+    for (var j = 0; j < interactive_data[2].length; j++){
+      interactive_data[2][j].value = 0;
+    }
+  } else {
+    //toggle on
+      for (var j = 0; j < interactive_data[2].length; j++){
+        interactive_data[2][j].value = d[2][j].value;
+      }
+  }
   //Show rest of data
   drawChartWithData();
 });
 
 
 function drawChartWithData(){
-  RadarChart.draw("#chart", d, mycfg);
+  RadarChart.draw("#chart", interactive_data, mycfg);
 }
 
 ////////////////////////////////////////////
