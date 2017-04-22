@@ -1,60 +1,67 @@
 //////////////////////////////////////
 //////////// PIE CHART ///////////////
 //////////////////////////////////////
-var svg = d3.select("#viewership"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height"),
-    radius = Math.min(width, height) / 2,
-    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+function updatePieChart(date_filename){
+  //d3.select("#viewership_pie").select("g").remove();
+  var svg = d3.select("#viewership_pie"),
+      width = +svg.attr("width"),
+      height = +svg.attr("height"),
+      radius = Math.min(width, height) / 2,
+      g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var pie = d3.pie()
-    .sort(null)
-    .value(function(d) { return d.hours; });
+  var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-var path = d3.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(0);
+  var pie = d3.pie()
+      .sort(null)
+      .value(function(d) { return d.hours; });
 
-var label = d3.arc()
-    .outerRadius(radius - 140)
-    .innerRadius(radius - 40);
+  var path = d3.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
 
-d3.csv("../data/esport_hours.csv", function(d) {
-  d.hours = +d.hours;
-  return d;
-}, function(error, data) {
-  if (error) throw error;
+  var label = d3.arc()
+      .outerRadius(radius - 140)
+      .innerRadius(radius - 40);
 
-  var arc = g.selectAll(".arc")
-    .data(pie(data))
-    .enter().append("g")
-      .attr("class", "arc");
+  d3.csv("../data/" + date_filename + "_hours.csv", function(d) {
+    d.hours = +d.hours;
+    return d;
+  }, function(error, data) {
+    if (error) throw error;
 
-  arc.append("path")
-      .attr("d", path)
-      .attr("fill", function(d) { return color(d.data.game); })
-      .on("mouseenter", function(d,i){
-        console.log(d);
-        d3.select(this).transition(300).style("opacity",.7);
-        updateBarChart(d.data.game);
-        show_info(d.data);
-      })
-      .on("mouseout", function(d,i){
-        d3.select(this).transition(300).style("opacity",1);
-        updateBarChart("total");
-        hide_info();
-      });
+    //g.selectAll(".arc").remove();
+    var arc = g.selectAll(".arc")
+      .data(pie(data))
+      .enter().append("g")
+        .attr("class", "arc");
 
+    //arc.select("path").remove();
+    arc.append("path")
+        .attr("d", path)
+        .attr("fill", function(d) { return color(d.data.game); })
+        .on("mouseenter", function(d,i){
+          console.log(d);
+          d3.select(this).transition(300).style("opacity",.7);
+          updateBarChart(d.data.game);
+          show_info(d.data);
+        })
+        .on("mouseout", function(d,i){
+          d3.select(this).transition(300).style("opacity",1);
+          updateBarChart("total");
+          hide_info();
+        });
 
+    arc.append("text")
+        .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
+        .attr("dy", "0.35em")
+        .text(function(d) { return d.data.game; });
 
-  arc.append("text")
-      .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
-      .attr("dy", "0.35em")
-      .text(function(d) { return d.data.game; });
-});
+    //arc.merge(arc);
+  });
+}
 
+updatePieChart("past_18months");
 
 //////////////////////////////////////
 //////////// BAR CHART ///////////////
@@ -87,14 +94,26 @@ function updateBarChart(game){
   // get the data
   var file;
   switch (game){
+    case "init":
+      file = "../data/viewership_init.csv";
+      break;
     case "total":
       file = "../data/viewership_total.csv";
       break;
     case "League of Legends":
-      file = "../data/lol_total.csv";
+      file = "../data/viewership_lol.csv";
       break;
     case "Counter-Strike: GO":
-      file = "../data/csgo_total.csv";
+      file = "../data/viewership_csgo.csv";
+      break;
+    case "DOTA 2":
+      file = "../data/viewership_dota2.csv";
+      break;
+    case "Hearthstone":
+      file = "../data/viewership_hearthstone.csv";
+      break;
+    case "Other Games":
+      file = "../data/viewership_other.csv";
       break;
   }
 
@@ -111,12 +130,16 @@ function updateBarChart(game){
     y.domain([0, 300]);
 
     // Draw the total, have it stay (use different class)
-    svg.selectAll(".bar")
-        .data(data)
-        .enter().append("rect")
+    var total_bars = svg.selectAll(".bar")
+        .data(data);
+      total_bars.enter().append("rect")
         .attr("class", "stay-bar")
         .attr("x", function(d) { return x(d.date); })
-        .attr("width", x.bandwidth())
+        .attr("width", x.bandwidth()+2)
+        .attr("y", function(d) { return y(d.views); })
+        .attr("height", function(d) { 0; })
+        .merge(total_bars)
+        .transition().duration(1500)
         .attr("y", function(d) { return y(d.views); })
         .attr("height", function(d) { return height - y(d.views); })
 
@@ -126,28 +149,46 @@ function updateBarChart(game){
       bars.enter().append("rect")
         .attr("class", "bar")
         .attr("x", function(d) { return x(d.date); })
+        .on("mouseenter", function(d,i){
+          console.log(d);
+          //updatePieChart(d.date)
+          d3.select("#time_range").text(d.date);
+          d3.select("#view_amount").text(d.views);
+        })
+        .on("mouseout", function(d,i){
+          hide_info();
+        })
         .attr("width", x.bandwidth())
         .attr("y", function(d) { return y(d.views); })
-        .attr("height", function(d) { return height - y(d.views); })
+        .attr("height", function(d) { 0; })
         .merge(bars)
         .transition().duration(1500)
+        .attr("height", function(d) { return height - y(d.views); })
         .attr("x", function(d) { return x(d.date); })
-        .attr("width", x.bandwidth())
+        .attr("width", x.bandwidth()+2)
         .attr("fill", function(){
-
           switch (game){
             case "total":
               return "grey";
               break;
             case "League of Legends":
-              return "#ff8c00";
+              return "#a05d56";
               break;
             case "Counter-Strike: GO":
-              return "#d0743c";
+              return "#6b486b";
+              break;
+            case "DOTA 2":
+              return "#7b6888";
+              break;
+            case "Hearthstone":
+              return "#8a89a6";
+              break;
+            case "Other Games":
+              return "#98abc5";
               break;
           }
 
-          //"#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", ,
+          //"#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c","#ff8c00"
         })
         .attr("y", function(d) { return y(d.views); })
         .attr("height", function(d) { return height - y(d.views); });
@@ -165,14 +206,13 @@ function updateBarChart(game){
     // add the y Axis
     svg.select("#yAxis")
       .attr("transform","translate(" + offset + ",0)")
-      .transition().duration(1500)
       .call(d3.axisLeft(y));
 
   });
 }
-updateBarChart("total");
 
 function hide_info(){
+  d3.select("#time_range").text("the past 18 months");
   d3.select("#view_amount").text("4 Billion");
   d3.select("#view_game").text("eSports");
 }

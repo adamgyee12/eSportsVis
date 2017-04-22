@@ -28,19 +28,13 @@ $(function() {
 
       afterLoad: function(anchorLink, index) {
         console.log(index);
-        /*
+
         if (index === 2) {
-          // gradually show the american woman
-          $('#american-woman')
-            .fadeTo(1000, 1, function complete() {
-              // slide her in from the left
-              $('#american-woman')
-                .animate({
-                  left: 250
-                }, 1000);
-            });
+          updateBarChart("total");
+          //setTimeout(function() { updateBarChart("League of Legends"); }, 5000);
         }
 
+        /*
         // start typewriting each story once you visit it
         if (index === 3) {
           typewrite(stories[0]);
@@ -77,6 +71,7 @@ $(function() {
       onLeave: function(index, nextIndex) {}
     });
 });
+
 
 
 

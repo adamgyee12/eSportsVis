@@ -1,0 +1,24 @@
+[
+  {
+    "game": "Other Games",
+    "hours": 10
+}, {
+    "game": "Black Ops III",
+    "hours": 30
+}, {
+    "game": "Overwatch",
+    "hours": 10
+}, {
+    "game": "Hearthstone",
+    "hours": 3
+}, {
+    "game": "DOTA 2",
+    "hours": 80
+}, {
+    "game": "Counter-Strike: GO",
+    "hours": 49
+}, {
+    "game": "League of Legends",
+    "hours": 10
+}
+]
