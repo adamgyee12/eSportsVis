@@ -153,7 +153,7 @@ function updateBarChart(game){
           console.log(d);
           //updatePieChart(d.date)
           d3.select("#time_range").text(d.date);
-          d3.select("#view_amount").text(d.views);
+          d3.select("#view_amount").text(d.views + " Million");
         })
         .on("mouseout", function(d,i){
           hide_info();
