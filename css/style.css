@@ -12,6 +12,12 @@
     stroke-dasharray: 1,1;
 }
 
+.object-fit-cover {
+  max-height: 500px;
+  width: 400px;
+  object-fit: cover; /*magic*/
+}
+
 .outline {
   stroke: black;
   stroke-width: 3;
@@ -91,6 +97,15 @@
   background-image: url(../images/gamers_cover.jpg);
   background-size: cover;
   padding: 0;
+}
+
+.filled {
+  background-color: #d0d0d0;
+  width: 500px;
+  opacity: 1;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 6px;
 }
 
 .navbar {
