@@ -6,7 +6,7 @@ The Numbers behind eSports
 
 The live website is being hosted at https://adamgyee12.github.io/eSportsVis/
 
-The process doc can be found at ProcessDoc.pdf
+The process doc can be found at ProcessBook.pdf
 
 The libraries used in the project can be found in the /js/lib/ folder.
 
