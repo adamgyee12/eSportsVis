@@ -24,7 +24,7 @@ function updatePieChart(date_filename){
       .outerRadius(radius - 140)
       .innerRadius(radius - 40);
 
-  d3.csv("/eSportsVis/data/" + date_filename + "_hours.csv", function(d) {
+  d3.csv("data/" + date_filename + "_hours.csv", function(d) {
     d.hours = +d.hours;
     return d;
   }, function(error, data) {
@@ -95,25 +95,25 @@ function updateBarChart(game){
   var file;
   switch (game){
     case "init":
-      file = "/eSportsVis/data/viewership_init.csv";
+      file = "data/viewership_init.csv";
       break;
     case "total":
-      file = "/eSportsVis/data/viewership_total.csv";
+      file = "data/viewership_total.csv";
       break;
     case "League of Legends":
-      file = "/eSportsVis/data/viewership_lol.csv";
+      file = "data/viewership_lol.csv";
       break;
     case "Counter-Strike: GO":
-      file = "/eSportsVis/data/viewership_csgo.csv";
+      file = "data/viewership_csgo.csv";
       break;
     case "DOTA 2":
-      file = "/eSportsVis/data/viewership_dota2.csv";
+      file = "data/viewership_dota2.csv";
       break;
     case "Hearthstone":
-      file = "/eSportsVis/data/viewership_hearthstone.csv";
+      file = "data/viewership_hearthstone.csv";
       break;
     case "Other Games":
-      file = "/eSportsVis/data/viewership_other.csv";
+      file = "data/viewership_other.csv";
       break;
   }
 

@@ -1,4 +1,4 @@
-d3.json("/eSportsVis/data/world.json", function (error, world) {
+d3.json("data/world.json", function (error, world) {
     if (error) throw error;
     drawMap(world);
 });
