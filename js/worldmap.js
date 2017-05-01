@@ -34,7 +34,7 @@ function drawMap(world) {
     var scalefactor=1./50. ;
 
     setTimeout(function() {
-      d3.csv("/eSportsVis/data/tournaments.csv", function(csv) {
+      d3.csv("data/tournaments.csv", function(csv) {
         svg.append("g").attr("class","bubble")
         .selectAll("circle")
             .data(csv)
