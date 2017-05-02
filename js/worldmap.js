@@ -46,10 +46,18 @@ function drawMap(world) {
             .attr("r", 0)
             .on("mouseover", function(d) {
                 d3.select(this).style("fill","steelblue");
-                console.log(d);
+                console.log(d.event);
                 d3.select("#event").text(d.event);
                 d3.select("#views").text(d.views);
                 d3.select("#year").text(d.year);
+
+                //d3.select("#image_panel").selectAll("img").remove();
+                d3.select("#image")
+                  .attr("src", function(){
+                    return "images/" + d.event + ".jpg";
+                });
+
+
               })
             .on("mouseout", function(d) {
                 d3.select(this).style("fill","black");

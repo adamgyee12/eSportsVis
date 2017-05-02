@@ -4,9 +4,12 @@ Adam Yee, Neil Bantoc
 
 The Numbers behind eSports
 
-css/ styles
-images/ pictures and content
-js/ modules, graphics, animations
+The live website is being hosted at https://adamgyee12.github.io/eSportsVis/
 
-To run, download repo and run the following command:
-python -m SimpleHTTPServer
+The process doc can be found at ProcessBook.pdf
+
+The libraries used in the project can be found in the /js/lib/ folder.
+
+The data used in this project can be found in the /data/ folder.
+
+The image content used in this project can be found in the /images/ folder.
