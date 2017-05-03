@@ -9,12 +9,12 @@ var games = [];
 var top5Games = [];
 
 var topGamesSVG = d3.select('#top-games-svg');
-var axisSpace = 80;
-var axisTopPadding = 10;
-var topGamesWidth = 600;
+var topGamesAxisSpace = 80;
+var topGamesAxisTopPadding = 10;
+var topGamesWidth = 700;
 var topGamesHeight = 400;
-var barWidth = topGamesWidth - axisSpace;
-var barHeight = topGamesHeight - axisSpace;
+var barWidth = topGamesWidth - topGamesAxisSpace;
+var barHeight = topGamesHeight - topGamesAxisSpace;
 
 var topGamesDiv = d3.select('#top-games');
 var topGamesLeft = topGamesDiv.select('#top-games-left');
@@ -148,7 +148,7 @@ function drawGraph() {
     .text(d3.format(",")(d[KEY_PRIZE]));
 
   d3.select('#top-games-bars')
-      .attr('transform', 'translate(' + axisSpace + ', ' + axisTopPadding + ')')
+      .attr('transform', 'translate(' + topGamesAxisSpace + ', ' + topGamesAxisTopPadding + ')')
     .selectAll("g")
     .data(top5Games)
     .enter().append("g")
@@ -196,27 +196,23 @@ function drawGraph() {
       .attr("x", function(d) {
         return yearScale(d['year']);
       })
-      .attr("y", function(d) {
-        return Math.min(dollarScale(d[KEY_PRIZE]), topGamesHeight - 1);
-      })
       .attr("width", function(d) {
         return yearScale.bandwidth();
       })
-      .attr("height", function(d) {
-        return Math.max(barHeight - dollarScale(d[KEY_PRIZE]), 1);
-      })
       .attr("fill", function(d) {
         return yearColorScale(d['year']);
-      });
+      })
+      .attr("y", barHeight)
+      .attr("height", 0);
 
   topGamesSVG.select('#yAxis')
-    .attr('transform', 'translate(' + axisSpace + ', ' + axisTopPadding + ')')
+    .attr('transform', 'translate(' + topGamesAxisSpace + ', ' + topGamesAxisTopPadding + ')')
     .call(d3.axisLeft(dollarScale)
         .ticks(10)
         .tickFormat(d3.format(',')));
 
   topGamesSVG.select('#xAxis')
-    .attr('transform', 'translate(' + axisSpace + ', ' + (axisTopPadding + barHeight) + ')')
+    .attr('transform', 'translate(' + topGamesAxisSpace + ', ' + (topGamesAxisTopPadding + barHeight) + ')')
     .call(d3.axisBottom(gamesScale))
       .selectAll(".tick text")
       .call(wrap, gamesScale.bandwidth());
@@ -254,6 +250,22 @@ function wrap(text, width) {
       }
     }
   });
+}
+
+function animateTopGamesChart() {
+  d3.select('#top-games-bars')
+    .selectAll("rect")
+    .attr("y", barHeight)
+    .attr("height", 0)
+    .transition()
+    .duration(500)
+    .delay(function(d, i) { return (i%7)*50; })
+    .attr("y", function(d) {
+      return Math.min(dollarScale(d[KEY_PRIZE]), topGamesHeight - 1);
+    })
+    .attr("height", function(d) {
+      return Math.max(barHeight - dollarScale(d[KEY_PRIZE]), 1);
+    });
 }
 
 var topGameFiles = ["data/2010-top-games.csv", "data/2011-top-games.csv", "data/2012-top-games.csv", "data/2013-top-games.csv", "data/2014-top-games.csv", "data/2015-top-games.csv", "data/2016-top-games.csv"];

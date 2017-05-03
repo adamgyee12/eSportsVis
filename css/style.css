@@ -397,3 +397,7 @@ sup.citation {
     width: 128px;
     height: 128px;
 }
+
+.plusBtn, .minusBtn {
+  min-width: 40px;
+}

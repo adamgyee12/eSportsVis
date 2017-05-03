@@ -55,6 +55,7 @@ function updatePieChart(date_filename){
     arc.append("text")
         .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
         .attr("dy", "0.35em")
+        .attr('fill', '#fafafa')
         .text(function(d) { return d.data.game; });
 
     //arc.merge(arc);
@@ -77,7 +78,7 @@ function updateBarChart(game){
   // set the ranges
   var x = d3.scaleBand()
             .range([offset, width+50])
-            .padding(0.1);
+            .paddingInner(0.2);
   var y = d3.scaleLinear()
             .range([height, offset]).nice();
 
@@ -135,11 +136,11 @@ function updateBarChart(game){
       total_bars.enter().append("rect")
         .attr("class", "stay-bar")
         .attr("x", function(d) { return x(d.date); })
-        .attr("width", x.bandwidth()+2)
-        .attr("y", function(d) { return y(d.views); })
+        .attr("width", x.bandwidth())
+        .attr("y", function(d) { return height; })
         .attr("height", function(d) { 0; })
         .merge(total_bars)
-        .transition().duration(1500)
+        .transition().duration(500).delay(function(d, i) { return i*10; })
         .attr("y", function(d) { return y(d.views); })
         .attr("height", function(d) { return height - y(d.views); })
 
@@ -159,17 +160,16 @@ function updateBarChart(game){
           hide_info();
         })
         .attr("width", x.bandwidth())
-        .attr("y", function(d) { return y(d.views); })
+        .attr("y", function(d) { return height; })
         .attr("height", function(d) { 0; })
         .merge(bars)
-        .transition().duration(1500)
+        .transition().duration(500).delay(function(d, i) { return i*10; })
         .attr("height", function(d) { return height - y(d.views); })
         .attr("x", function(d) { return x(d.date); })
-        .attr("width", x.bandwidth()+2)
         .attr("fill", function(){
           switch (game){
             case "total":
-              return "grey";
+              return "#BEBEBE";
               break;
             case "League of Legends":
               return "#a05d56";

@@ -46,8 +46,12 @@ $(function() {
           //setTimeout(function() { updateBarChart("League of Legends"); }, 5000);
         }
 
-        if (index === 4) {
-          
+        if (index === 6) {
+          animateTopGamesChart();
+        }
+
+        if (index == 7) {
+          animateSumailChart();
         }
 
         /*

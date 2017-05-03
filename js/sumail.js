@@ -94,13 +94,9 @@ function successSumail(error, data) {
       .attr('x', function(d) {
         return sumailTournamentScale(d['tournament']);
       })
-      .attr('y', function(d) {
-        return Math.min(sumailDollarScale(d['prize']), sumailBarHeight - 5);
-      })
       .attr('width', sumailTournamentScale.bandwidth())
-      .attr('height', function (d) {
-        return Math.max(sumailBarHeight - sumailDollarScale(d['prize']), 5);
-      })
+      .attr("y", sumailBarHeight)
+      .attr("height", 0)
       .attr('fill',  function(d) {
         return sumailPlaceScale(d['place']);
       });
@@ -137,3 +133,19 @@ function successSumail(error, data) {
 }
 
 d3.csv("data/sumail-earnings.csv", processSumail, successSumail);
+
+function animateSumailChart() {
+  sumailSVG.select('#bars')
+    .selectAll("rect")
+    .attr("y", sumailBarHeight)
+    .attr("height", 0)
+    .transition()
+    .duration(500)
+    .delay(function(d, i) { return i*20; })
+    .attr('y', function(d) {
+      return Math.min(sumailDollarScale(d['prize']), sumailBarHeight - 5);
+    })
+    .attr('height', function (d) {
+      return Math.max(sumailBarHeight - sumailDollarScale(d['prize']), 5);
+    });
+}
