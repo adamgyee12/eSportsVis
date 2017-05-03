@@ -6,7 +6,7 @@ The Numbers behind eSports
 
 The live website is being hosted at https://adamgyee12.github.io/eSportsVis/
 
-The screencast with commentary can be found at 
+The screencast with commentary can be found at https://www.youtube.com/watch?v=g4MLVmGS2jw
 
 The process doc can be found at ProcessBook.pdf
 
