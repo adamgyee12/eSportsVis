@@ -118,13 +118,7 @@ function filterTop5Games() {
 }
 
 function drawGraph() {
-  var minDollars = d3.min(top5Games, function(d) {
-    return d[KEY_PRIZE];
-  });
-  var maxDollars = d3.max(top5Games, function(d) {
-    return d[KEY_PRIZE];
-  });
-  // console.log("Min: " + minDollars + " Max: " + maxDollars);
+  // dollarScale.domain(d3.extent(top5Games, function(d) {return d[KEY_PRIZE];}));
   dollarScale.domain([4000000000, 100000]);
 
   var gameNames = [];
