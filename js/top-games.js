@@ -164,7 +164,9 @@ function drawGraph() {
         if (year == undefined) {
           year = {
             'game' : d[KEY_GAME],
-            'prize' : 0
+            'prize' : 0,
+            'tournaments' : 0,
+            'players' : 0
           };
         }
         year.year = x;
