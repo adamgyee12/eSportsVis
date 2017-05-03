@@ -190,37 +190,39 @@
     </section>
 
     <section class="section">
-      <div class="container">
+      <h1 align="center">It's about the fame and (a whole lot of) fortune</h1>
+      <div class="container" id="top-games">
         <h1 align="center"></h1>
           <div>
-            <p class="lead">What can you get in return when you invest your time in eSports?</p>
+            <p class="lead"></p>
           </div>
-          <div class="col-sm-6">
-            <p class="lead">In <strong id="time_range">the past 18 months</strong>, over <strong id="view_amount">4 Billion</strong> hours of <strong id="view_game">eSports</strong> were watched on Twitch.tv</p>
-          </br>
-
-        <row>
-          <div id="top_games_left">
-            <svg id="top-games">
-              <g id="xAxis"></g>
-              <g id="yAxis"></g>
-              <g id="top-games-bars">
-            </svg>
-          </div>
-        </row>
-        <row>
-          <div id="">
+          <div class="col-sm-8">
+            <p class="lead">Prize pools for eSports tournaments have been <strong>growing</strong> during the <strong>last 6 years</strong> as the viewership for these tournaments <strong>attract more sponsors</strong>. But by <strong>how much?</strong> Hover over a bar to learn more.</p>
+            </br>
+            <row>
+              <div id="top-games-left">
+                <svg id="top-games-svg">
+                  <g id="xAxis"></g>
+                  <g id="yAxis"></g>
+                  <g id="top-games-bars"></g>
+                  <g id="top-games-legend"></g>
+                </svg>
+              </div>
+            </row>
           </div>
 
-        </row>
-
-
-          </div>
-
-          <div class="col-sm-6">
-            <svg width="600" height="600">
-              <!--<g id="pie_helper"></g>-->
-            </svg>
+          <div class="col-sm-4">
+            <row>
+              <br/><br/><br/><br/><br/><br/><br/>
+              <div id="top-games-right">
+                <p class="lead">In <span id="year"></span>, <strong id="game-name"></strong> accumulated</p>
+                <row>
+                  <div class="col-sm-12"><p class="lead"><strong id="dollars">$<span id="dollars-value"></span></strong><br/> total prize money from</p></div>
+                  <div class="col-sm-6"><p class="lead"><span id="tournaments"><strong id="tournaments-value"></strong> tournaments </spam> where a total of</p></div>
+                  <div class="col-sm-6"><p class="lead"><span id="players"><strong id="players-value"> </strong> professional players </span> competed</p></div>
+                </row>
+              </div>
+            </row>
           </div>
       </div>
     </section>
@@ -267,7 +269,8 @@
   <script src="js/worldmap.js "></script>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.24.0/d3-legend.min.js"></script>
 
 
 

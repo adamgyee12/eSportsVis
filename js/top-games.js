@@ -8,15 +8,20 @@ var KEY_PLAYER_COUNT = 'playerCount';
 var games = [];
 var top5Games = [];
 
-var svgHeight = 600;
-var svgWidth = 800;
+var topGamesSVG = d3.select('#top-games-svg');
+var axisSpace = 80;
+var axisTopPadding = 10;
+var topGamesWidth = 600;
+var topGamesHeight = 400;
+var barWidth = topGamesWidth - axisSpace;
+var barHeight = topGamesHeight - axisSpace;
 
-var svg = d3.select('#top-games');
-var width = 600;
-var height = 400;
+var topGamesDiv = d3.select('#top-games');
+var topGamesLeft = topGamesDiv.select('#top-games-left');
+var topGamesRight = topGamesDiv.select('#top-games-right');
 
-svg.attr('width', width)
-  .attr('height', height);
+topGamesSVG.attr('width', topGamesWidth)
+  .attr('height', topGamesHeight);
 
 // Inner x scale (years grouped by game)
 var yearScale = d3.scaleBand()
@@ -25,12 +30,12 @@ var yearScale = d3.scaleBand()
 
 // Outer x scale (games)
 var gamesScale = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.05);
+    .rangeRound([0, barWidth])
+    .paddingInner(0.2);
 
 // Y scale
 var dollarScale = d3.scaleLinear()
-    .rangeRound([0, height]);
+    .rangeRound([0, barHeight]);
 
 // Z sale
 var yearColorScale = d3.scaleOrdinal()
@@ -119,24 +124,42 @@ function drawGraph() {
   var maxDollars = d3.max(top5Games, function(d) {
     return d[KEY_PRIZE];
   });
-  console.log("Min: " + minDollars + " Max: " + maxDollars);
-  dollarScale.domain([100000, 5000000000]);
+  // console.log("Min: " + minDollars + " Max: " + maxDollars);
+  dollarScale.domain([4000000000, 100000]);
 
   var gameNames = [];
 
   for (x = 0; x < top5Games.length; x++) {
-    gameNames.push(top5Games[x][KEY_GAME]);
+    gameNames.push(top5Games[top5Games.length - x - 1][KEY_GAME]);
   }
 
   gamesScale.domain(gameNames);
   yearScale.rangeRound([0, gamesScale.bandwidth()]);
 
+  var d = top5Games[0]['2016'];
+  d['year'] = 2016;
+  topGamesRight.select('#game-name')
+    .text(d[KEY_GAME]);
+
+  topGamesRight.select('#tournaments-value')
+    .text(d[KEY_TOURNAMENTS]);
+
+  topGamesRight.select('#players-value')
+    .text(d[KEY_PLAYERS]);
+
+  topGamesRight.select('#year')
+    .text(d['year']);
+
+  topGamesRight.select('#dollars-value')
+    .text(d3.format(",")(d[KEY_PRIZE]));
+
   d3.select('#top-games-bars')
+      .attr('transform', 'translate(' + axisSpace + ', ' + axisTopPadding + ')')
     .selectAll("g")
     .data(top5Games)
     .enter().append("g")
       .attr("transform", function(d){
-        return "translate(" + gamesScale(d[KEY_GAME]) + ",0)";
+        return 'translate(' + gamesScale(d[KEY_GAME]) + ', 0)';
       })
     .selectAll("rect")
     .data(function(d) {
@@ -156,23 +179,87 @@ function drawGraph() {
       return years;
     })
     .enter().append("rect")
+      .on('mouseover', function(d) {
+        topGamesRight.select('#game-name')
+          .text(d[KEY_GAME]);
+
+        topGamesRight.select('#tournaments-value')
+          .text(d[KEY_TOURNAMENTS]);
+
+        topGamesRight.select('#players-value')
+          .text(d[KEY_PLAYERS]);
+
+        topGamesRight.select('#year')
+          .text(d['year']);
+
+        topGamesRight.select('#dollars-value')
+          .text(d3.format(",")(d[KEY_PRIZE]));
+
+        d3.select(this).attr('fill-opacity', '.50');
+      }).on('mouseout',  function(d) {
+        d3.select(this).attr('fill-opacity', '1');
+      })
       .attr("x", function(d) {
-        console.log('year scale');
-        console.log(yearScale(d['year']));
         return yearScale(d['year']);
       })
       .attr("y", function(d) {
-        return Math.min(height - dollarScale(d[KEY_PRIZE]), height - 1);
+        return Math.min(dollarScale(d[KEY_PRIZE]), topGamesHeight - 1);
       })
       .attr("width", function(d) {
         return yearScale.bandwidth();
       })
       .attr("height", function(d) {
-        return Math.max(dollarScale(d[KEY_PRIZE]), 1);
+        return Math.max(barHeight - dollarScale(d[KEY_PRIZE]), 1);
       })
       .attr("fill", function(d) {
         return yearColorScale(d['year']);
       });
+
+  topGamesSVG.select('#yAxis')
+    .attr('transform', 'translate(' + axisSpace + ', ' + axisTopPadding + ')')
+    .call(d3.axisLeft(dollarScale)
+        .ticks(10)
+        .tickFormat(d3.format(',')));
+
+  topGamesSVG.select('#xAxis')
+    .attr('transform', 'translate(' + axisSpace + ', ' + (axisTopPadding + barHeight) + ')')
+    .call(d3.axisBottom(gamesScale))
+      .selectAll(".tick text")
+      .call(wrap, gamesScale.bandwidth());
+
+  var legend = d3.legendColor()
+  .orient('horizontal')
+  .shapeWidth(50)
+  .shapePadding(0)
+  .scale(yearColorScale);
+
+  topGamesSVG.select("#top-games-legend")
+    .attr('transform', 'translate('+ (barWidth - (50 * 7)) +', 0)')
+    .call(legend);
+}
+
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
 }
 
 var topGameFiles = ["data/2010-top-games.csv", "data/2011-top-games.csv", "data/2012-top-games.csv", "data/2013-top-games.csv", "data/2014-top-games.csv", "data/2015-top-games.csv", "data/2016-top-games.csv"];
